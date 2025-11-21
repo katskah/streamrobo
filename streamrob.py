@@ -1,5 +1,5 @@
 import streamlit as st
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import requests
 import io
 
@@ -29,20 +29,36 @@ if uploaded_file:
     annotated = image.copy()
     draw = ImageDraw.Draw(annotated)
 
+    # Optional: load a font for text
+    try:
+        font = ImageFont.truetype("arial.ttf", size=16)
+    except:
+        font = ImageFont.load_default()
+
     for pred in result.get("predictions", []):
         x0 = pred["x"] - pred["width"]/2
         y0 = pred["y"] - pred["height"]/2
         x1 = pred["x"] + pred["width"]/2
         y1 = pred["y"] + pred["height"]/2
-        draw.rectangle([x0, y0, x1, y1], outline="red", width=4)
+
+        # Draw bounding box
+        draw.rectangle([x0, y0, x1, y1], outline="red", width=3)
+
+        # Draw confidence bar
+        conf = pred.get("confidence", 0)
+        bar_width = (x1 - x0) * conf  # proportional to confidence
+        draw.rectangle([x0, y1 + 2, x0 + bar_width, y1 + 8], fill="green")
+
+        # Draw confidence text
+        draw.text((x0, y1 + 10), f"{conf:.2f}", fill="white", font=font)
 
     # --- Display side-by-side ---
     col1, col2 = st.columns(2)
 
     with col1:
         st.subheader("Image originale")
-        st.image(image)  # ← corrigé
+        st.image(image)
 
     with col2:
         st.subheader("Image annotée")
-        st.image(annotated)  # ← corrigé
+        st.image(annotated)
