@@ -3,31 +3,29 @@ from PIL import Image, ImageDraw, ImageFont
 import io
 
 st.set_page_config(page_title="Détection Roboflow", layout="wide")
-st.title("🧪 Détection avec Roboflow et seuil de confiance")
+st.title("🧪 Détection avec seuil de confiance et choix du modèle")
 
-# --- Liste dynamique des modèles Roboflow ---
-# Tu pourras ajouter d'autres modèles à cette liste au fur et à mesure
-models = [
-    "encre-ferrogallique-2-wy9md-instant-1",
-    "encre-ferrogallique-2-wy9md/1",
-    "encre-ferrogallique-2-wy9md/5",
-    "encre-ferrogallique-2-wy9md/3",
-    "encre-ferrogallique-2-wy9md/2",
-]
-
+# --- Sélecteur de modèle ---
+models = ["encre-ferrogallique-1", "encre-ferrogallique-2", "encre-ferrogallique-3"]
 selected_model = st.selectbox("Choisir le modèle Roboflow :", models)
+
 st.write(f"Modèle choisi : {selected_model}")
 
 # --- Upload de l'image ---
-uploaded_file = st.file_uploader("Choisir une image :", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader(
+    "Choisir une image :", type=["jpg", "jpeg", "png"]
+)
+
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
 
     # --- Slider pour seuil de confiance ---
-    confidence_threshold = st.slider("Seuil de confiance", 0.0, 1.0, 0.5, 0.01)
+    confidence_threshold = st.slider(
+        "Seuil de confiance", 0.0, 1.0, 0.5, 0.01
+    )
     st.write(f"Seuil choisi : {confidence_threshold:.2f}")
 
-    # --- Exemple de prédictions (à remplacer par l'inférence Roboflow) ---
+    # --- Exemple de prédictions (à remplacer par Roboflow) ---
     result = {
         "predictions": [
             {"x": 150, "y": 100, "width": 100, "height": 50, "confidence": 0.85},
