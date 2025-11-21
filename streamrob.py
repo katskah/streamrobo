@@ -12,7 +12,7 @@ st.title("Roboflow Object Detection - Inférence sur nouvelles images")
 # Initialiser le client Roboflow
 CLIENT = InferenceHTTPClient(
     api_url="https://serverless.roboflow.com",
-    api_key="MZoNAW26DvGlgbvBmhdS"
+    a
 )
 
 # Sélection du modèle Roboflow (paramétrable)
@@ -87,3 +87,4 @@ if uploaded_file:
 
     # Nettoyer le fichier temporaire
     os.unlink(tmp_path)
+
