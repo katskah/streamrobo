@@ -9,10 +9,11 @@ import os
 # Titre de l'application
 st.title("Roboflow Object Detection - Inférence sur nouvelles images")
 
-# Initialiser le client Roboflow
+# Initialiser le client Roboflow avec la clé API cachée
+api_key = st.secrets["ROBOFLOW_API_KEY"]
 CLIENT = InferenceHTTPClient(
     api_url="https://serverless.roboflow.com",
-    api_key="MZoNAW26DvGlgbvBmhdS"
+    api_key=api_key
 )
 
 # Sélection du modèle Roboflow (paramétrable)
