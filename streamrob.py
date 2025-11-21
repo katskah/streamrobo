@@ -31,7 +31,8 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file:
     # Afficher l'image originale
-    image = Image.open(uploaded_file)
+    image = Image.open(uploaded_file).convert("RGB")
+
     st.image(
         image,
         caption="Image originale",
