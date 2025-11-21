@@ -41,8 +41,8 @@ if uploaded_file:
 
     with col1:
         st.subheader("Image originale")
-        st.image(image, use_container_width=True)
+        st.image(image)  # ← corrigé
 
     with col2:
         st.subheader("Image annotée")
-        st.image(annotated, use_container_width=True)
+        st.image(annotated)  # ← corrigé
